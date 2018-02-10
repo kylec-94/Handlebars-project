@@ -1,0 +1,26 @@
+{
+  "name": "handlebars-project",
+  "version": "1.0.0",
+  "description": "In-house POS system",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kylec-94/Handlebars-project.git"
+  },
+  "author": "Kyle Crane",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kylec-94/Handlebars-project/issues"
+  },
+  "homepage": "https://github.com/kylec-94/Handlebars-project#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "mysql": "^2.15.0",
+    "path": "^0.12.7"
+  }
+}

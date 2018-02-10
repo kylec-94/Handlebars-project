@@ -16,7 +16,7 @@
 			<hr>
 			<h3>Place your order below.</h3>
 			<br>
-			<a href="/orders"><button type="button" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-align-justify"></span> Kitchen View</button></a>
+			<a href="/kitchen"><button type="button" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-align-justify"></span> Kitchen View</button></a>
 	
 	<!-- end jumbotron -->
 	</div>
@@ -33,15 +33,15 @@
   					<!-- start table input -->
     				<div class="input-group">
   						<span class="input-group-addon" id="basic-addon1">Table #</span>
-  						<input type="text" class="form-control" placeholder="Table #" aria-describedby="basic-addon1">
+  						<input id="table-input" type="number" class="form-control" placeholder="Table #" aria-describedby="basic-addon1">
 					</div>
 					<br>
 					<!-- start order input -->
-    				<div class="input-group">
-  						<span class="input-group-addon" id="basic-addon1" id="order">Order</span>
-  						<input type="text" class="form-control" placeholder="Order" aria-describedby="basic-addon1">
+    				<!-- <div class="input-group">
+  						<span class="input-group-addon" id="basic-addon1">Order</span>
+  						<input type="text" id="food" class="form-control" placeholder="Order" aria-describedby="basic-addon1">
   			
-					</div>
+					</div> -->
 					<br>
 					<div id="order-well">
 					</div>
@@ -53,13 +53,13 @@
 					<!-- start server input -->
     				<div class="input-group">
   						<span class="input-group-addon" id="basic-addon1">Server #</span>
-  						<input type="text" class="form-control" placeholder="Server #" aria-describedby="basic-addon1">
+  						<input type="number" id="server-number" class="form-control" placeholder="Server #" aria-describedby="basic-addon1">
 					</div>
 					<br>
 					<!-- start notes input -->
     				<div class="input-group">
   						<span class="input-group-addon" id="basic-addon1">Notes</span>
-  						<input type="text" class="form-control" placeholder="Notes" aria-describedby="basic-addon1">
+  						<input type="text" id="notes" class="form-control" placeholder="Notes" aria-describedby="basic-addon1">
 					</div>
 					<br>
 					<div>
@@ -84,18 +84,23 @@
 
 <script>
 
+
+// var foodItems = $(".order").val().trim();
+
+// orderItems.push(foodItems);
+
+//function listening for '+ Order' button to be clicked
 $("#add-order").on("click", function(){
 
 console.log("button responding");
-
+	
 var newOrder = $("<div>");
 	newOrder.addClass("input-group");
 var newOrderSpan = $("<span>Order</span>");
 	newOrderSpan.addClass("input-group-addon");
 	newOrderSpan.attr("id", "basic-addon1");
 var newOrderInput = $("<input>");
-	newOrderInput.addClass("form-control");
-	newOrderInput.attr("id", "order");
+	newOrderInput.addClass("form-control food");
 	newOrderInput.attr("type", "text");
 	newOrderInput.attr("placeholder", "Order");
 	newOrderInput.attr("aria-describedby", "basic-addon1");
@@ -108,8 +113,50 @@ newOrder.append(newOrderInput);
 $("#order-well").append(newOrder);
 $("#order-well").append(orderBreak);
 
-
 });	
+
+$(".food").each(function(i){
+
+	$(this).attr("id", "food-item" + (i + 1));
+
+});
+
+//API Post to SQL DB using data from input fields when submit is clicked
+
+$("#submit-order").on("click", function(){
+
+	event.preventDefault();
+
+	var foodItems = [];
+
+	$(".food").each(function(i){
+
+		// $(this).attr("id", "food-item" + i);
+
+		foodItems.push($(this).val());
+		
+
+	});//end 
+
+	var Order = {
+
+				table: $("#table-input").val().trim(),
+				food: foodItems,
+				server: $("#server-number").val().trim(),
+				notes: $("#notes").val(),
+				};
+
+	$.post("/api/order-add", Order)
+	 .done(function(data){
+
+	 	console.log("request complete: ",data);
+	 });
+
+
+	console.log("button working");
+	console.log(Order);
+	
+});
 
 </script>
 
