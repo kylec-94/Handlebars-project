@@ -9,8 +9,25 @@
 function completeOrder(){
 
 
+	var queryString = "SELECT * FROM ?? WHERE ?? = ? INSERT INTO ?? VALUES (?, ?, ?, ?, ?)"
+
+
 }
 
-//export the module
+/*  MODULE FOR HANDLING HBRS TEMPLATE TO INTEGRATE WITH BOOTSTRAP  */
+
+function renderPendingOrders(selectorParentElement, idMainTemplate, arrPartialTemplates, jsonData){
+
+
+
+
+
+
+}
+
+
+
+//export the modules
 module.exports = completeOrder;
+module.exports = renderPendingOrders;
 

@@ -144,6 +144,7 @@ $("#submit-order").on("click", function(){
 				food: foodItems,
 				server: $("#server-number").val().trim(),
 				notes: $("#notes").val(),
+				status: false,
 				};
 
 	$.post("/api/order-add", Order)
@@ -155,6 +156,8 @@ $("#submit-order").on("click", function(){
 
 	console.log("button working");
 	console.log(Order);
+
+
 	
 });
 

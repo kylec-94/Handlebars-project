@@ -11,23 +11,17 @@ var app = express();
 //choosing port for app
 var PORT = 3000;
 
-//establish connection for SQL
-//create connection to the SQL table 
-var connection = sql.createConnection({
-
-	host: 'localhost',
-	port: 3306,
-	user: 'root',
-	password: '',
-	database: 'restaurant_POS_db'
-
-});
+//require orm package
+var orm = require('./config/orm.js');
+/* Importing the modules for existing orders */
+var orderModule = require('./controllers/order_controller.js');
 
 //Set up the server to handle data parsing 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 
+var orders = [];
 //========================
 //HTML ROUTES
 
@@ -38,7 +32,14 @@ app.get("/", function(req, res) {
 
 //kitchen view route 
 app.get("/kitchen", function(req, res) {
-  res.sendFile(path.join(__dirname, '.html'));
+  res.sendFile(path.join(__dirname, 'views/kitchen.html'));
+});
+
+//test to see if data is transferring
+
+app.get("/check-kitchen", function(req, res){
+
+	res.json(orders);
 });
 
 
@@ -46,11 +47,13 @@ app.get("/kitchen", function(req, res) {
 //api routes
 
 //post route for new order from homepage
-app.post("/order-add", function(data){
+app.post("/api/order-add", function(req, res){
 
-var query = "INSERT INTO ?? VALUES (?, ?, ? , ?, ?)";
+	var data = req.body;
 
+	orm.addOrder(data);
 
+	orders.push(data);
 
 });
 
