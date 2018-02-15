@@ -3,26 +3,31 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var path = require('path');
-var mysql = require('mysql');
-
-//turn 'express' into an easier variable to handle
-var app = express();
 
 //choosing port for app
-var PORT = 3000;
+var PORT = process.env.PORT || 3000;
 
-//require orm package
-var orm = require('./config/orm.js');
-/* Importing the modules for existing orders */
-var orderModule = require('./controllers/order_controller.js');
+var app = express();
 
 //Set up the server to handle data parsing 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+// Set Handlebars.
+var exphbs = require("express-handlebars");
 
-var orders = [];
-//========================
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
+
+// Import routes and give the server access to them.
+var routes = require('./controllers/order_controller.js');
+
+app.use(routes);
+
+
+
+
+
 //HTML ROUTES
 
 //homepage route
@@ -35,8 +40,8 @@ app.get("/kitchen", function(req, res) {
   res.sendFile(path.join(__dirname, 'views/kitchen.html'));
 });
 
-//test to see if data is transferring
 
+//test to see if data is transferring
 app.get("/check-kitchen", function(req, res){
 
 	res.json(orders);
@@ -46,16 +51,33 @@ app.get("/check-kitchen", function(req, res){
 //========================
 //api routes
 
-//post route for new order from homepage
-app.post("/api/order-add", function(req, res){
+// //post route for new order from homepage
+// router.post("/api/order-add", function(req, res){
 
-	var data = req.body;
+// 	console.log("Request complete: ", req.body);
 
-	orm.addOrder(data);
+// 	var data = req.body;
 
-	orders.push(data);
+	
 
-});
+// 	orders.push(data);
+
+	
+// 	orm.addOrder(new_orders,[req.table, req.server, req.food, req.notes, req.status], cb);
+		
+// 	// var queryString = "INSERT INTO new_orders (table_number, server_number, food_items, notes, order_complete) VALUES (?, ?, ?, ?, ?)";
+
+	
+
+// 	// connection.query(queryString, [data.table, data.server, data.food, data.notes, data.status] ,function(err, res){
+
+// 	// 	if (err) throw err;
+
+// 	// });
+
+// 	// res.json(data);
+		
+// });
 
 
 //========================
@@ -66,3 +88,7 @@ app.listen(PORT, function(){
 console.log("App listening on PORT " + PORT);
 
 });
+
+
+
+

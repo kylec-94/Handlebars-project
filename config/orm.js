@@ -6,23 +6,49 @@ var connection = require('./connection.js');
 
 var orm = {
 
-	addOrder: function(data){
-
-
-		//for loop b/c receiving data as JSON and need to loop through
-		for (var i = 0; i < data.length; i++) {
+	create: function(table, cols, vals, cb){
 		
-		var queryString = "INSER INTO ?? VALUES (?, ?, ?, ?, ?)"
+		var queryString = "INSERT INTO " + table;
 
-		connection.query(queryString, [new_orders, data[i].table, data[i].food, data[i].server, data[i].status], function(err, res){
+		queryString += " (";
+    	queryString += cols.toString();
+    	queryString += ") ";
+    	queryString += "VALUES (";
+   		queryString += vals.toString();
+    	queryString += ") ";
 
-			if (err) throw err;
-			console.log(res);
-		});
-		}//end for loop 
-	}//end addOrder
+    	console.log(queryString);
+		
+		connection.query(queryString, vals, function(err, result){
 
-};
+		if (err){
+			throw err;
+		}
+
+		cb(result);
+		});//end query connection
+
+	},//end create	
+
+
+
+	delete: function(table, condition, cb) {
+
+    var queryString = "DELETE FROM " + table;
+
+    queryString += " WHERE ";
+
+    queryString += condition;
+    
+    connection.query(queryString, function(err, result) {
+      if (err) {
+        throw err;
+      }
+      cb(result);
+    });
+  }
+
+};//end of orm object
 
 module.exports = orm;
 

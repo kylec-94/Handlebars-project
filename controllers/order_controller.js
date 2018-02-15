@@ -1,33 +1,28 @@
-// put logic for order control below 
 
+var express = require('express');
 
-//1. import any packages 
+var router = express.Router();
 
-//2. create function for when a handlebars DOM button is clicked
-	//moving an order from left column to the right column 
-
-function completeOrder(){
-
-
-	var queryString = "SELECT * FROM ?? WHERE ?? = ? INSERT INTO ?? VALUES (?, ?, ?, ?, ?)"
-
-
-}
-
-/*  MODULE FOR HANDLING HBRS TEMPLATE TO INTEGRATE WITH BOOTSTRAP  */
-
-function renderPendingOrders(selectorParentElement, idMainTemplate, arrPartialTemplates, jsonData){
+var order = require('../model/orderHandler.js');
 
 
 
+//route for order sent from homescreen 
 
+router.post("/api/order-add", function(req, res) {
+  order.createOrder([
+    "table_number", "server_number", "food_items", "notes", "order_complete"
+  ], [
+    req.body.table, req.body.server, req.body.food, req.body.notes, req.body.status
+  ], function(result) {
+    
+    	if(err){
+    		throw err;
+    	}
+    	else{
+    		console.log("Entered into database");
+    	}
+  });
+});
 
-
-}
-
-
-
-//export the modules
-module.exports = completeOrder;
-module.exports = renderPendingOrders;
-
+module.exports = router;

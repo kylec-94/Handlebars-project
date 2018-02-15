@@ -5,10 +5,12 @@
 //require package
 var mysql = require("mysql");
 var connection = mysql.createConnection({
+
   host: "localhost",
+  port: 3306,
   user: "root",
   password: "",
-  database: "restaurant_POS_db"
+  database: "restaurant_pos_db"
 });
 
 //connect and throw err if can't connect

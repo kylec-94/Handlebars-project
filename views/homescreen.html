@@ -3,7 +3,8 @@
 <head>
 	<title>Home</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="http://code.jquery.com/jquery-3.3.1.js"></script>
+  	
 </head>
 <body>
 
@@ -123,11 +124,13 @@ $(".food").each(function(i){
 
 //API Post to SQL DB using data from input fields when submit is clicked
 
-$("#submit-order").on("click", function(){
+$("#submit-order").on("click", function(event){
 
 	event.preventDefault();
 
 	var foodItems = [];
+
+	
 
 	$(".food").each(function(i){
 
@@ -138,27 +141,27 @@ $("#submit-order").on("click", function(){
 
 	});//end 
 
+
+	// var foodComp = foodItems.join("-");//STUCK HERE 
+
 	var Order = {
 
 				table: $("#table-input").val().trim(),
-				food: foodItems,
+				food: (foodItems),
 				server: $("#server-number").val().trim(),
 				notes: $("#notes").val(),
-				status: false,
-				};
+				status: 0,
+	};
 
 	$.post("/api/order-add", Order)
-	 .done(function(data){
-
-	 	console.log("request complete: ",data);
-	 });
-
-
-	console.log("button working");
-	console.log(Order);
-
+			.done(function(data){
+				
+			console.log(data);
+			
+	});
 
 	
+
 });
 
 </script>

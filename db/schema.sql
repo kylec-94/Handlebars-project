@@ -1,9 +1,9 @@
 ###Data Schema
 
 
-CREATE DATABASE restaurant_POS_db;
+CREATE DATABASE restaurant_pos_db;
 
-USE restaurant_POS_db;
+USE restaurant_pos_db;
 
 CREATE TABLE new_orders 
 (
@@ -12,7 +12,7 @@ CREATE TABLE new_orders
 	server_number int NOT NULL,
 	food_items varchar(200) NOT NULL,
 	notes varchar(200),
-	order_complete BOOLEAN DEFAULT false,
+	order_complete BOOLEAN,
 	PRIMARY KEY (id)
 );
 
