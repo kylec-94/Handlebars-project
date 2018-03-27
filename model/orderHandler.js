@@ -12,14 +12,32 @@ var order = {
     });
   },
 
+  readNewOrder: function(table, vals, cb){
+
+    orm.readNewOrder(table, vals, function(res){
+      cb(res);
+    });
+
+  },
+
+  changeOrder: function(table, cols, vals, cb){
+
+    orm.change("new_orders", cols, vals, function(res){
+
+      cb(res);
+
+    });
+
+  },
+
   moveOrder: function(vals, cb) {
     orm.create("completed_orders", vals, function(res) {
       cb(res);
     });
   },
 
-  deleteOrder: function(table, condition, cb) {
-    orm.delete("new_orders", table, condition, function(res) {
+  deleteOrder: function(table, val, cb) {
+    orm.delete("new_orders", val, function(res) {
       cb(res);
     });
   }

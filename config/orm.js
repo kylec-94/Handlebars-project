@@ -14,12 +14,12 @@ var orm = {
     	queryString += cols.toString();
     	queryString += ") ";
     	queryString += "VALUES (";
-   		queryString += vals.toString();
+   		queryString += JSON.stringify(vals).replace('[','').replace(']','');
     	queryString += ") ";
 
     	console.log(queryString);
 		
-		connection.query(queryString, vals, function(err, result){
+		connection.query(queryString, function(err, result){
 
 		if (err){
 			throw err;
@@ -30,15 +30,28 @@ var orm = {
 
 	},//end create	
 
+	readNewOrder: function(table, vals, cb){
 
+		var queryString = "SELECT * FROM " + table;
 
-	delete: function(table, condition, cb) {
+		queryString += " WHERE order_complete = " + vals;
+console.log('queryString', queryString);
+		connection.query(queryString, function(err, result){
+
+			if (err){
+				throw err;
+			}
+			cb(result);
+		});
+	},
+
+	delete: function(table, val, cb) {
 
     var queryString = "DELETE FROM " + table;
 
-    queryString += " WHERE ";
+    queryString += " WHERE id = ";
 
-    queryString += condition;
+    queryString += val;
     
     connection.query(queryString, function(err, result) {
       if (err) {

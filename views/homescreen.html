@@ -147,7 +147,7 @@ $("#submit-order").on("click", function(event){
 	var Order = {
 
 				table: $("#table-input").val().trim(),
-				food: (foodItems),
+				food: foodItems.join('-'),
 				server: $("#server-number").val().trim(),
 				notes: $("#notes").val(),
 				status: 0,

@@ -1,0 +1,45 @@
+<div class="row">
+
+		<!-- orders that need to be completed -->
+		<div class="col-md-6">
+			<div class="panel panel-default">
+  				<!-- Default panel contents -->
+  				<div class="panel-heading">New Orders</div>
+
+  					{{#each order}}
+						
+						<div class="order-well">	
+								Server: {{server_number}}
+							<br>
+	
+							
+								Table #: {{table_number}}
+							<br>
+
+							
+								Food: {{food_items}}
+							<br>
+
+							
+								Notes: {{notes}}
+							<br>
+							
+								
+								<button class="complete-order" data-order-id="{{this.id}}">
+									Order Done
+								</button>
+							<br>
+								
+						</div>	
+							
+	
+						
+					{{/each}}	
+
+
+			</div>
+		<!-- end column -->
+		</div>
+		
+	<!-- end row -->
+	</div>
